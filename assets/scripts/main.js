@@ -39,7 +39,7 @@ function getRecipesFromStorage() {
  */
 function addRecipesToDocument(recipes) {
   // A10. TODO - Get a reference to the <main> element
-  const main = document.querySelector('main')
+  var main = document.querySelector('main')
   // A11. TODO - Loop through each of the recipes in the passed in array,
   //            create a <recipe-card> element for each one, and populate
   //            each <recipe-card> with that recipe data using element.data = ...
@@ -71,31 +71,30 @@ function saveRecipesToStorage(recipes) {
 function initFormHandler() {
 
   // B2. TODO - Get a reference to the <form> element
-  let form = document.querySelector('form')
+  var form = document.querySelector('form');
   // B3. TODO - Add an event listener for the 'submit' event, which fires when the
   //            submit button is clicked
-  form.addEventListener('submit', (event)=>{
-    let FormData = new FormData(form);
-    let recipeObject = {};
-    for (const [key, value] of formData) {
+  form.addEventListener("submit", ()=>{
+    // window.alert("clicked");
+    var formData  = new FormData(form);
+    var recipeObject = {};
+    for (const [key, value] of formData ) {
       recipeObject[`${key}`] = `${value}`;
+      // window.alert(key, value);
     }
     var newcard = document.createElement("recipe-card");
     newcard.data = recipeObject;
 
     //add to main
-    const main = document.querySelector('main')
+    var main = document.querySelector('main')
     main.appendChild(newcard)
 
-    let updaterecipe = JSON.parse(localStorage.getItem('recipe'));
+    var updaterecipe = getRecipesFromStorage();
     if (updaterecipe == null) {
       updaterecipe = [];
     }
     updaterecipe.push(recipeObject);
-
-    recipestring = JSON.stringify(updaterecipe);
-    console.log(recipestring);
-    localStorage.setItem('recipe', recipestring);
+    localStorage.setItem("recipes", JSON.stringify(updaterecipe));
 
 
   });
